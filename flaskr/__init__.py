@@ -3,7 +3,8 @@
 import os
 from flask import Flask
 
-def create_app(test_config = None):
+
+def create_app(test_config=None):
     # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -24,10 +25,13 @@ def create_app(test_config = None):
     except OSError:
         pass
 
-
     # A simple page that say hello
+
     @app.route('/hello')
     def hello():
         return 'Hello, world!'
-    
+
+    from . import db
+    db.init_app(app)
+
     return app
